@@ -21,19 +21,30 @@ Simply run SPP_Keyboard_Emulator, though I would recommend opening the Storror g
 
 CONTROLS:
 
-Mouse = Right joystick
+- Mouse = Right joystick
 
-Left mouse button = Right Trigger + Unlock mouse from screen centre to allow vaulting
-Right mouse button = Pull camera
-WASD = Front/Back + Side-Side movement. Essentially the same as the default WASD but smoother
-Left Shift = Sprint (Left Trigger)
-Left CTRL = Walk (Left Bumper)
-E = Change camera (Y)
-F = Ragdoll on/off (Right thumbstick in)
-ESC = Exit program
-R = Restart Level
-Left Alt = Focus/Unfocus emulator (By default, the emulator is active once you run it. If you press alt, you are now free to use the computer and the emulator is ignore. Pressing alt again toggles back to using the emulator)
-Spacebar = DPAD-DOWN (Hold to allow changing camera distance, then use RMB and pull the camera back or in as you would normally with right joystick
+- Left mouse button = Right Trigger + Unlock mouse from screen centre to allow vaulting
+
+- Right mouse button = Pull camera
+
+- WASD = Front/Back + Side-Side movement. Essentially the same as the default WASD but smoother
+
+- Left Shift = Sprint (Left Trigger)
+
+- Left CTRL = Walk (Left Bumper)
+
+- E = Change camera (Y)
+
+- F = Ragdoll on/off (Right thumbstick in)
+
+- ESC = Exit program
+
+- R = Restart Level
+
+- Left Alt = Focus/Unfocus emulator (By default, the emulator is active once you run it. If you press alt, you are now free to use the computer and the emulator is ignore. 
+Pressing alt again toggles back to using the emulator)
+
+- Spacebar = DPAD-DOWN (Hold to allow changing camera distance, then use RMB and pull the camera back or in as you would normally with right joystick
 
 
 Any feedback or requests please contact Gunsofthefuture from the Storror discord. I will be keeping track of feedback and in my spare time will keep making this emulator better.
