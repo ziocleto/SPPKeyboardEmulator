@@ -1,3 +1,6 @@
+V4 (Unreleased):
+- Added interpolated mouse movement for a smoooooth ride
+
 V3:
 - Added R to restart level
 - RMB now controls camera instead of always pulling it with the mouse
