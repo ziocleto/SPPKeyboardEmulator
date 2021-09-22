@@ -1,0 +1,4 @@
+- Improved UI:
+  - A nicer red circle, potentially a custom made sprite with some Storror umph to it
+  - A ghost trail of where you've moved your mouse so you can see the path you took and it'll fade out over a second or so
+  - More noticeable feedback upon reaching the limit of the joystick motion
