@@ -1,5 +1,9 @@
 V4 (Unreleased):
 - Added interpolated mouse movement for a smoooooth ride
+- Broke the interpolation
+- Fixed the interpolation and added it to the camera control too
+- Broke the mouse centering and you could initiate vaults with the mouse at the edge of the screen, not leaving you enough room to do the vault
+- Fixed the mouse centering
 - HUD change. Red ring now turns storror blue when edge is reached, giving feedback that max input in that direction has been reached
 - HUD change. Red changed to crimson
 
