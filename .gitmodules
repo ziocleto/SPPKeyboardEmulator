@@ -1,0 +1,21 @@
+[submodule "pygame"]
+	path = pygame
+	url = https://github.com/pygame/pygame.git
+[submodule "keyboard"]
+	path = keyboard
+	url = https://github.com/boppreh/keyboard.git
+[submodule "vgamepad"]
+	path = vgamepad
+	url = https://github.com/yannbouteiller/vgamepad.git
+[submodule "whratio"]
+	path = whratio
+	url = https://github.com/mirukana/whratio.git
+[submodule "pywin32"]
+	path = pywin32
+	url = https://github.com/mhammond/pywin32.git
+[submodule "pyautogui"]
+	path = pyautogui
+	url = https://github.com/asweigart/pyautogui.git
+[submodule "numpy"]
+	path = numpy
+	url = https://github.com/numpy/numpy.git
