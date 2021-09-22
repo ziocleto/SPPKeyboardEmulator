@@ -1,5 +1,7 @@
 V4 (Unreleased):
 - Added interpolated mouse movement for a smoooooth ride
+- HUD change. Red ring now turns storror blue when edge is reached, giving feedback that max input in that direction has been reached
+- HUD change. Red changed to crimson
 
 V3:
 - Added R to restart level
