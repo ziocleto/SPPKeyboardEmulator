@@ -1,0 +1,14 @@
+V3:
+- Added R to restart level
+- RMB now controls camera instead of always pulling it with the mouse
+- Can now toggle the emulator using Left Alt. By default it's active (mouse stuck in middle) but if you toggle with Alt, the emulator becomes ignored (mouse is free) until you press alt again
+- Improved WASD controls (Basically default but smoother, doesn't slam a hard 90 degree turn when you press A or D going whilst forward)
+- Spacebar now lets you change distance of camera
+
+V2:
+- Packaged the necessary drivers alongside the emulator
+- Press ESC to exit the emulator
+- Vault system moved from space bar to LMB
+
+V1:
+- Initial release
