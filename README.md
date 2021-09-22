@@ -22,6 +22,7 @@ Simply run SPP_Keyboard_Emulator, though I would recommend opening the Storror g
 CONTROLS:
 
 Mouse = Right joystick
+
 Left mouse button = Right Trigger + Unlock mouse from screen centre to allow vaulting
 Right mouse button = Pull camera
 WASD = Front/Back + Side-Side movement. Essentially the same as the default WASD but smoother
