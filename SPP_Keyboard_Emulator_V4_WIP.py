@@ -48,6 +48,9 @@ SetWindowPos = windll.user32.SetWindowPos
 screen = pygame.display.set_mode((window_width, window_height), pygame.NOFRAME)
 black = (0, 0, 0)  # Transparency colour
 
+fade = pygame.Surface([window_width, window_height]).convert_alpha()
+fade.fill(black)
+
     # Create layered window
 hwnd = pygame.display.get_wm_info()["window"]
 win32gui.SetWindowLong(hwnd, win32con.GWL_EXSTYLE,
@@ -75,7 +78,7 @@ should_mouse_stickR = 0  # Used to separate "run once" from "run continuously" f
 trigger_delay = 0  # Used to create a time delay between resetting joystick and releasing right trigger
 restart_delay = 0  # Used to create delays in the restart level command
 joystick_area_radius = (window_height / 2.1)  # Radius of area representing joystick movement
-joystick_marker_size = 10  # Radius of joystick tracking dot in the UI
+joystick_marker_size = 8  # Radius of joystick tracking dot in the UI
 joystick_marker_size_double = joystick_marker_size * 2  # Ensure the joystick marker stays inside the red circle
 free_mouse_timer = 0
 f_timer = 0  # Time delay used for releasing the f button
@@ -91,12 +94,14 @@ s_timer = 0
 a_timer = 0
 d_timer = 0
 space_timer = 0
-vault_sensitivity = 0.009
+vault_sensitivity = 0.008
 position_timer = 0
 current_posX = 0
 current_posY = 0
 mouse_posX_difference = 0
 mouse_posY_difference = 0
+alt_pressed = 0
+is_outline_red = 0
 
 ############# FUNCTIONS FOR GAMEPAD INPUT 
 
@@ -138,9 +143,6 @@ while True:
             pygame.quit()
             break
 
-# Redraw screen - clears previous mouse trails.
-    screen.fill(0)
-
 ##### GATHER MOUSE DATA, CALCULATE NEEDED VALUES
 
     joystick_marker_posX = screen_centreX + (joystick_area_radius * right_joystick_X_value)
@@ -159,6 +161,7 @@ while True:
                 (joystick_area_radius - joystick_marker_size_double) * numpy.cos(joystick_angle))
     joystick_marker_clampedY = screen_centreY + (
             (joystick_area_radius - joystick_marker_size_double) * numpy.sin(joystick_angle))
+
 
     # Centre mouse in screen upon loading the script (Just tidies everything up by starting in the middle)
     if python_loaded == 0:
@@ -243,15 +246,18 @@ while True:
             # Draw the joystick HUD based on position of the marker
             if unfocus_emulator == 0:
                 if distance_from_centre < joystick_area_radius - joystick_marker_size_double:
+                    screen.fill(0)
                     pygame.draw.circle(screen, crimson, (screen_centreX, screen_centreY), joystick_area_radius,
                                        joystick_marker_size)
                     pygame.draw.circle(screen, white, (joystick_marker_posX, joystick_marker_posY),
-                                   joystick_marker_size)
+                                       joystick_marker_size)
+                    is_outline_red = 1
                 else:
                     pygame.draw.circle(screen, storror, (screen_centreX, screen_centreY), joystick_area_radius,
                                        joystick_marker_size)
                     pygame.draw.circle(screen, white, (joystick_marker_clampedX, joystick_marker_clampedY),
                                        joystick_marker_size)
+                    is_outline_red = 0
 
     # When LMB is released, reset everything
     else:
@@ -260,17 +266,31 @@ while True:
         if trigger_delay == 1:
             right_trigger_reset()
             trigger_delay = 0
+            screen.fill(0)
 
         # Reset joystick and all associated values, ready for next usage
         if trigger_delay > 1:
             right_joystick_reset()
+            # Continue drawing HUD whilst the delay is on, for feedback sake
+            if distance_from_centre < joystick_area_radius - joystick_marker_size_double:
+                if is_outline_red == 1:
+                    pygame.draw.circle(screen, crimson, (screen_centreX, screen_centreY), joystick_area_radius,
+                                       joystick_marker_size)
+                else:
+                    pygame.draw.circle(screen, storror, (screen_centreX, screen_centreY), joystick_area_radius,
+                                       joystick_marker_size)
+            else:
+                pygame.draw.circle(screen, storror, (screen_centreX, screen_centreY), joystick_area_radius,
+                                   joystick_marker_size)
+                pygame.draw.circle(screen, white, (joystick_marker_clampedX, joystick_marker_clampedY),
+                                   joystick_marker_size)
+
             right_joystick_X_value = 0
             right_joystick_Y_value = 0
             trigger_delay -= 1
             initial_posX = pyautogui.position()[0]
             initial_posY = pyautogui.position()[1]
             should_mouse_stickL = 0
-
 
     # Reset variable for first mouse press, and update the gamepad
     gamepad.update()
@@ -342,8 +362,11 @@ while True:
 
     if free_mouse_timer == 0:
         if keyboard.is_pressed('alt'):
+            alt_pressed = 1
+        if not keyboard.is_pressed('alt') and alt_pressed == 1:
             unfocus_emulator = (unfocus_emulator + 1) % 2
             free_mouse_timer = 10
+            alt_pressed = 0
 
     # Better WASD controls
     if keyboard.is_pressed('w') and unfocus_emulator == 0:
