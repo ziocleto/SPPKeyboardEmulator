@@ -6,6 +6,7 @@ V4 (Unreleased):
 - Fixed the mouse centering
 - HUD change. Red ring now turns storror blue when edge is reached, giving feedback that max input in that direction has been reached
 - HUD change. Red changed to crimson
+- HUD change. A trail of your mouse is left behind whilst at edge of radius (Useful for reverse vaults)
 
 V3:
 - Added R to restart level
