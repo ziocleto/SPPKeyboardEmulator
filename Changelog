@@ -8,6 +8,7 @@ V4 (Unreleased):
 - HUD change. Red ring now turns storror blue when edge is reached, giving feedback that max input in that direction has been reached
 - HUD change. Red changed to crimson
 - HUD change. A trail of your mouse is left behind whilst at edge of radius (Useful for reverse vaults)
+- HUD change. Position moved to be slightly right and up of centre screen. Easier to see in corner of your eye (in my opinion)
 - Number 1 (Either on numpad or above your letters) now toggles the controller HUD in game (DPAD-UP)
 - Number 2 (Either on numpad or above your letters) now toggles the joystick UI that appears when vaulting
 
