@@ -11,8 +11,8 @@ import win32con
 import win32gui
 import pyautogui
 
-################ INITIALISATION - LIBRARIES, WINDOW CALCULATIONS 
-    
+################ INITIALISATION - LIBRARIES, WINDOW CALCULATIONS
+
 # Initialise Libraries
 pygame.init()
 gamepad = vg.VX360Gamepad()
@@ -28,7 +28,7 @@ storror = (4, 245, 204)
 monitor_centreX = int(screen_info.current_w/2)
 monitor_centreY = int(screen_info.current_h/2)
 
-# Screen, Resolution Calculations & Remaining On Top 
+# Screen, Resolution Calculations & Remaining On Top
     # Calculate the screen aspect ratio and split into 2 values
 aspect1 = whratio.as_int(screen_info.current_w, screen_info.current_h)[0]
 aspect2 = whratio.as_int(screen_info.current_w, screen_info.current_h)[1]
@@ -38,8 +38,8 @@ window_width = int(aspect2 * screen_info.current_w / 100)
 window_height = int(aspect1 * screen_info.current_h / 100)
 
     # Set window location as percentage of monitor to place in lower right quadrant
-window_posX = int((screen_info.current_w/100)*75)
-window_posY = int((screen_info.current_h/100)*75)
+window_posX = int((screen_info.current_w/100)*60)
+window_posY = int((screen_info.current_h/100)*40)
 
     # Create User32 variable for window
 SetWindowPos = windll.user32.SetWindowPos
@@ -47,9 +47,6 @@ SetWindowPos = windll.user32.SetWindowPos
     # Create window for pygame using the calculations above
 screen = pygame.display.set_mode((window_width, window_height), pygame.NOFRAME)
 black = (0, 0, 0)  # Transparency colour
-
-fade = pygame.Surface([window_width, window_height]).convert_alpha()
-fade.fill(black)
 
     # Create layered window
 hwnd = pygame.display.get_wm_info()["window"]
@@ -66,7 +63,7 @@ screen_centreX = window_width / 2
 screen_centreY = window_height / 2
 
 
-# INITIALISATION --- TEMPORARY VARIABLES 
+# INITIALISATION --- TEMPORARY VARIABLES
 
 initial_posX = 0  # PosX of mouse upon left click
 initial_posY = 0  # PosY of mouse upon left click
@@ -94,7 +91,7 @@ s_timer = 0
 a_timer = 0
 d_timer = 0
 space_timer = 0
-vault_sensitivity = 0.008
+vault_sensitivity = 0.009
 position_timer = 0
 current_posX = 0
 current_posY = 0
@@ -102,8 +99,11 @@ mouse_posX_difference = 0
 mouse_posY_difference = 0
 alt_pressed = 0
 is_outline_red = 0
+num1_timer = 0
+num2_pressed = 0
+HUD = 0
 
-############# FUNCTIONS FOR GAMEPAD INPUT 
+############# FUNCTIONS FOR GAMEPAD INPUT
 
 
     # Pulls Right Trigger
@@ -200,7 +200,7 @@ while True:
             if mouse_posY_difference < 0 and right_joystick_Y_value < 1:
                 right_joystick_Y_value += vault_sensitivity
             if mouse_posY_difference > 0 and right_joystick_Y_value > -1:
-                right_joystick_Y_value -= vault_sensitivity
+                right_joystick_Y_value -= vault_sensitivity*1.2
             gamepad.update()
     else:
         right_joystick_reset()
@@ -244,7 +244,7 @@ while True:
 
 
             # Draw the joystick HUD based on position of the marker
-            if unfocus_emulator == 0:
+            if unfocus_emulator == 0 and HUD == 0:
                 if distance_from_centre < joystick_area_radius - joystick_marker_size_double:
                     screen.fill(0)
                     pygame.draw.circle(screen, crimson, (screen_centreX, screen_centreY), joystick_area_radius,
@@ -272,18 +272,19 @@ while True:
         if trigger_delay > 1:
             right_joystick_reset()
             # Continue drawing HUD whilst the delay is on, for feedback sake
-            if distance_from_centre < joystick_area_radius - joystick_marker_size_double:
-                if is_outline_red == 1:
-                    pygame.draw.circle(screen, crimson, (screen_centreX, screen_centreY), joystick_area_radius,
-                                       joystick_marker_size)
+            if HUD == 0:
+                if distance_from_centre < joystick_area_radius - joystick_marker_size_double:
+                    if is_outline_red == 1:
+                        pygame.draw.circle(screen, crimson, (screen_centreX, screen_centreY), joystick_area_radius,
+                                           joystick_marker_size)
+                    else:
+                        pygame.draw.circle(screen, storror, (screen_centreX, screen_centreY), joystick_area_radius,
+                                           joystick_marker_size)
                 else:
                     pygame.draw.circle(screen, storror, (screen_centreX, screen_centreY), joystick_area_radius,
                                        joystick_marker_size)
-            else:
-                pygame.draw.circle(screen, storror, (screen_centreX, screen_centreY), joystick_area_radius,
-                                   joystick_marker_size)
-                pygame.draw.circle(screen, white, (joystick_marker_clampedX, joystick_marker_clampedY),
-                                   joystick_marker_size)
+                    pygame.draw.circle(screen, white, (joystick_marker_clampedX, joystick_marker_clampedY),
+                                       joystick_marker_size)
 
             right_joystick_X_value = 0
             right_joystick_Y_value = 0
@@ -296,7 +297,7 @@ while True:
     gamepad.update()
 
 
-######################### OTHER BUTTONS FOR PC CONTROL 
+######################### OTHER BUTTONS FOR PC CONTROL
 
     # Emulates f as right joystick
     if win32api.GetKeyState(70) < 0 and unfocus_emulator == 0:  # 70 is ASCII for 'F'
@@ -417,7 +418,22 @@ while True:
         gamepad.release_button(button=vg.XUSB_BUTTON.XUSB_GAMEPAD_DPAD_DOWN)
         space_timer = 0
 
-######################### UPDATING DISPLAY 
+    if keyboard.is_pressed('1') and unfocus_emulator == 0:
+        gamepad.press_button(button=vg.XUSB_BUTTON.XUSB_GAMEPAD_DPAD_UP)
+        num1_timer = 10
+    if num1_timer > 0:
+        num1_timer -= 1
+    if num1_timer == 1:
+        gamepad.release_button(button=vg.XUSB_BUTTON.XUSB_GAMEPAD_DPAD_UP)
+        num1_timer = 0
+
+    if keyboard.is_pressed('2'):
+        num2_pressed = 1
+    if not keyboard.is_pressed('2') and num2_pressed == 1:
+        HUD = (HUD + 1) % 2
+        num2_pressed = 0
+
+######################### UPDATING DISPLAY
 
     pygame.display.update()
     gamepad.update()
