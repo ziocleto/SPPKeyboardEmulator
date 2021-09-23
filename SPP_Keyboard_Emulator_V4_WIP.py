@@ -19,7 +19,8 @@ gamepad = vg.VX360Gamepad()
 screen_info = pygame.display.Info()
 
 # Setting colours to be used
-red = (255, 0, 0)
+crimson = (220, 20, 60)
+emerald = (27, 121, 49)
 white = (255, 255, 255)
 storror = (4, 245, 204)
 
@@ -69,7 +70,8 @@ initial_posY = 0  # PosY of mouse upon left click
 right_joystick_X_value = 0
 right_joystick_Y_value = 0
 python_loaded = 0  # Check initial loading of script
-should_mouse_stick = 0  # Used to separate "run once" from "run continuously" functions in joystick input
+should_mouse_stickL = 0  # Used to separate "run once" from "run continuously" functions for LMB
+should_mouse_stickR = 0  # Used to separate "run once" from "run continuously" functions for RMB
 trigger_delay = 0  # Used to create a time delay between resetting joystick and releasing right trigger
 restart_delay = 0  # Used to create delays in the restart level command
 joystick_area_radius = (window_height / 2.1)  # Radius of area representing joystick movement
@@ -80,7 +82,7 @@ f_timer = 0  # Time delay used for releasing the f button
 e_timer = 0  # Time delay used for releasing the e button
 LCTRL_timer = 0  # Time delay used for releasing the LCTRL button
 LShift_timer = 0  # Time delay used for releasing the LShift button
-lock_mouse_to_centre = 1  # 0 = False, 1 = True
+lock_mouse_to_centre = True
 unfocus_emulator = 0  # 0 = False, 1 = True
 forward_float = 0
 sideways_float = 0
@@ -89,7 +91,7 @@ s_timer = 0
 a_timer = 0
 d_timer = 0
 space_timer = 0
-vault_sensitivity = 0.01
+vault_sensitivity = 0.009
 position_timer = 0
 current_posX = 0
 current_posY = 0
@@ -167,80 +169,89 @@ while True:
 
     # Logic for mouse controlling camera when RMB is pressed
     if win32api.GetKeyState(win32con.VK_RBUTTON) < 0 and unfocus_emulator == 0:
-        # Whilst mouse is held down find distance travelled every 5 ticks
-        if position_timer == 0:
-            initial_posX = pyautogui.position()[0]
-            initial_posY = pyautogui.position()[1]
-            position_timer = 5
-        if position_timer > 1:
-            position_timer -= 1
-        if position_timer == 1:
-            current_posX = pyautogui.position()[0]
-            current_posY = pyautogui.position()[1]
-            mouse_posX_difference = current_posX - initial_posX
-            mouse_posY_difference = current_posY - initial_posY
-            position_timer = 0
+        if should_mouse_stickR == 0:
+            pyautogui.moveTo(monitor_centreX, monitor_centreY)
+            should_mouse_stickR = 1
 
-        lock_mouse_to_centre = False
-        # Whilst RMB is held down, control Right Joystick, and do the mouse movement math
-        right_joystick_movement()
-        if mouse_posX_difference > 0 and right_joystick_X_value < 1:
-            right_joystick_X_value += vault_sensitivity
-        if mouse_posX_difference < 0 and right_joystick_X_value > -1:
-            right_joystick_X_value -= vault_sensitivity
-        if mouse_posY_difference < 0 and right_joystick_Y_value < 1:
-            right_joystick_Y_value += vault_sensitivity
-        if mouse_posY_difference > 0 and right_joystick_Y_value > -1:
-            right_joystick_Y_value -= vault_sensitivity
-        gamepad.update()
+        if should_mouse_stickR == 1:
+            # Whilst mouse is held down find distance travelled every 5 ticks
+            if position_timer == 0:
+                initial_posX = pyautogui.position()[0]
+                initial_posY = pyautogui.position()[1]
+                position_timer = 5
+            if position_timer > 1:
+                position_timer -= 1
+            if position_timer == 1:
+                current_posX = pyautogui.position()[0]
+                current_posY = pyautogui.position()[1]
+                mouse_posX_difference = current_posX - initial_posX
+                mouse_posY_difference = current_posY - initial_posY
+                position_timer = 0
+
+            # Whilst RMB is held down, control Right Joystick, and do the mouse movement math
+            right_joystick_movement()
+            if mouse_posX_difference > 0 and right_joystick_X_value < 1:
+                right_joystick_X_value += vault_sensitivity
+            if mouse_posX_difference < 0 and right_joystick_X_value > -1:
+                right_joystick_X_value -= vault_sensitivity
+            if mouse_posY_difference < 0 and right_joystick_Y_value < 1:
+                right_joystick_Y_value += vault_sensitivity
+            if mouse_posY_difference > 0 and right_joystick_Y_value > -1:
+                right_joystick_Y_value -= vault_sensitivity
+            gamepad.update()
     else:
         right_joystick_reset()
-
-
+        should_mouse_stickR = 0
 
 ####### Main Behaviour Loop - Mouse is Pressed.
     if win32api.GetKeyState(win32con.VK_LBUTTON) < 0 and unfocus_emulator == 0:
 
-        trigger_delay = 200  # Set/Reset a delay for releasing trigger. Used later.
+        if should_mouse_stickL == 0:
+            trigger_delay = 500  # Set/Reset a delay for releasing trigger. Used later.
+            pyautogui.moveTo(monitor_centreX, monitor_centreY)
+            should_mouse_stickL = 1
 
-        # Whilst mouse is held down find distance travelled every 5 ticks
-        if position_timer == 0:
-            initial_posX = pyautogui.position()[0]
-            initial_posY = pyautogui.position()[1]
-            position_timer = 5
-        if position_timer > 1:
-            position_timer -= 1
-        if position_timer == 1:
-            current_posX = pyautogui.position()[0]
-            current_posY = pyautogui.position()[1]
-            mouse_posX_difference = current_posX - initial_posX
-            mouse_posY_difference = current_posY - initial_posY
-            position_timer = 0
+        if should_mouse_stickL == 1:
+            # Whilst mouse is held down find distance travelled every 5 ticks
+            if position_timer == 0:
+                initial_posX = pyautogui.position()[0]
+                initial_posY = pyautogui.position()[1]
+                position_timer = 5
+            if position_timer > 1:
+                position_timer -= 1
+            if position_timer == 1:
+                current_posX = pyautogui.position()[0]
+                current_posY = pyautogui.position()[1]
+                mouse_posX_difference = current_posX - initial_posX
+                mouse_posY_difference = current_posY - initial_posY
+                position_timer = 0
 
-        lock_mouse_to_centre = False
-        # Whilst LMB is held down, pull RT, control Right Joystick, and do the mouse movement math
-        right_trigger_pull()
-        right_joystick_movement()
-        if mouse_posX_difference > 0 and right_joystick_X_value < 1:
-            right_joystick_X_value += vault_sensitivity
-        if mouse_posX_difference < 0 and right_joystick_X_value > -1:
-            right_joystick_X_value -= vault_sensitivity
-        if mouse_posY_difference < 0 and right_joystick_Y_value < 1:
-            right_joystick_Y_value += vault_sensitivity
-        if mouse_posY_difference > 0 and right_joystick_Y_value > -1:
-            right_joystick_Y_value -= vault_sensitivity
-        gamepad.update()
+            # Whilst LMB is held down, pull RT, control Right Joystick, and do the mouse movement math
+            right_trigger_pull()
+            right_joystick_movement()
+            if mouse_posX_difference > 0 and right_joystick_X_value < 1:
+                right_joystick_X_value += vault_sensitivity
+            if mouse_posX_difference < 0 and right_joystick_X_value > -1:
+                right_joystick_X_value -= vault_sensitivity
+            if mouse_posY_difference < 0 and right_joystick_Y_value < 1:
+                right_joystick_Y_value += vault_sensitivity
+            if mouse_posY_difference > 0 and right_joystick_Y_value > -1:
+                right_joystick_Y_value -= vault_sensitivity
+            gamepad.update()
 
 
-        # Draw the joystick HUD based on position of the marker
-        pygame.draw.circle(screen, red, (screen_centreX, screen_centreY), joystick_area_radius,
-                           joystick_marker_size)
-        if distance_from_centre < joystick_area_radius - joystick_marker_size_double:
-            pygame.draw.circle(screen, white, (joystick_marker_posX, joystick_marker_posY),
-                           joystick_marker_size)
-        else:
-            pygame.draw.circle(screen, storror, (joystick_marker_clampedX, joystick_marker_clampedY),
-                               joystick_marker_size)
+            # Draw the joystick HUD based on position of the marker
+            if unfocus_emulator == 0:
+                if distance_from_centre < joystick_area_radius - joystick_marker_size_double:
+                    pygame.draw.circle(screen, crimson, (screen_centreX, screen_centreY), joystick_area_radius,
+                                       joystick_marker_size)
+                    pygame.draw.circle(screen, white, (joystick_marker_posX, joystick_marker_posY),
+                                   joystick_marker_size)
+                else:
+                    pygame.draw.circle(screen, storror, (screen_centreX, screen_centreY), joystick_area_radius,
+                                       joystick_marker_size)
+                    pygame.draw.circle(screen, white, (joystick_marker_clampedX, joystick_marker_clampedY),
+                                       joystick_marker_size)
 
     # When LMB is released, reset everything
     else:
@@ -256,13 +267,14 @@ while True:
             right_joystick_X_value = 0
             right_joystick_Y_value = 0
             trigger_delay -= 1
-            lock_mouse_to_centre = True
             initial_posX = pyautogui.position()[0]
             initial_posY = pyautogui.position()[1]
+            should_mouse_stickL = 0
+
 
     # Reset variable for first mouse press, and update the gamepad
-    should_mouse_stick = 0
     gamepad.update()
+
 
 ######################### OTHER BUTTONS FOR PC CONTROL 
 
