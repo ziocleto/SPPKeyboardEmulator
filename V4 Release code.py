@@ -200,7 +200,7 @@ while True:
             if mouse_posY_difference < 0 and right_joystick_Y_value < 1:
                 right_joystick_Y_value += vault_sensitivity
             if mouse_posY_difference > 0 and right_joystick_Y_value > -1:
-                right_joystick_Y_value -= vault_sensitivity*1.2
+                right_joystick_Y_value -= vault_sensitivity*1.5
             gamepad.update()
     else:
         right_joystick_reset()
@@ -239,7 +239,7 @@ while True:
             if mouse_posY_difference < 0 and right_joystick_Y_value < 1:
                 right_joystick_Y_value += vault_sensitivity
             if mouse_posY_difference > 0 and right_joystick_Y_value > -1:
-                right_joystick_Y_value -= vault_sensitivity
+                right_joystick_Y_value -= vault_sensitivity*1.5
             gamepad.update()
 
 
