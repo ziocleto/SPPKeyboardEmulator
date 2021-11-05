@@ -1,4 +1,13 @@
-V4 (Unreleased):
+V5 Released:
+- Fixed issue of joystick input not being created if you moved the mouse too fast
+- Fixed issue of if you initiated a vault with the mouse too close to the edge of the screen, you would have no room to move the mouse
+- Improved sensitivity to more closely match the mouse movement
+- Removed the now defunct toggle controls image action
+- Changed toggle HUD from "2" to "6" (I know this sounds weird. It's an artifact from an experiment that I noticed after export and didn't find it important enough to go back for)
+- Added a quick command menu to the tab key
+- Changed DPAD-Down from "space" to "v" as space is now jump
+
+V4 Released:
 - Added interpolated mouse movement for a smoooooth ride
 - Added increased downard sensitivity to account for having less mouse room to move down against your own wrist. Now feels much better trying to do a dash vault
 - Broke the interpolation
