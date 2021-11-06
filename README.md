@@ -1,5 +1,3 @@
-# SPPKeyboardEmulator
-
 Hi! This is a keyboard and mouse emulator tailored for the Storror Parkour Pro game.
 It was coded by Gunsofthefuture and stop_amertime with some technical support from HITS_Dado, David, and the Python Discord
 
@@ -16,35 +14,31 @@ To 'unfocus' the emulator and free up your keyboard and mouse, press Left Alt. P
 HOW TO USE:
 First install the ViGEmBus_Setup. These are drivers for the virtual xbox 360 controller. This only needs to be done once
 
-Simply run SPP_Keyboard_Emulator, though I would recommend opening the Storror game first due to the mouse getting stuck in the middle of the screen as I mentioned earlier
+Next set keyboard language to English BEFORE opening the SPP demo or my program
+
+Then simply run SPP_Keyboard_Emulator, though I would recommend opening the Storror game first due to the mouse getting stuck in the middle of the screen as I mentioned earlier
 
 
 CONTROLS:
 
-- Mouse = Right joystick
+Mouse = Right joystick
+Left mouse button = Right Trigger + Unlock mouse from screen centre to allow vaulting
+Right mouse button = Pull camera
+WASD = Front/Back + Side-Side movement. Essentially the same as the default WASD but smoother
+Left Shift = Sprint (Left Trigger)
+Left CTRL = Walk (Left Bumper)
+Space = Jump
+E = Change camera (Y)
+F = Ragdoll on/off (Right thumbstick in)
+ESC = Exit program
+Left Alt = Focus/Unfocus emulator (By default, the emulator is active once you run it. If you press alt, you are now free to use the computer and the emulator is ignore. Pressing alt again toggles back to using the emulator)
+V = DPAD-DOWN (Hold to allow changing camera distance, then use RMB and pull the camera back or in as you would normally with right joystick
+Tab = Open/close quick command menu
+Up/Down Arrows = Cycle through quick command menu
+Enter = Select command from command menu
+Middle mouse button = Right bumper (First person view)
 
-- Left mouse button = Right Trigger + Unlock mouse from screen centre to allow vaulting
 
-- Right mouse button = Pull camera
-
-- WASD = Front/Back + Side-Side movement. Essentially the same as the default WASD but smoother
-
-- Left Shift = Sprint (Left Trigger)
-
-- Left CTRL = Walk (Left Bumper)
-
-- E = Change camera (Y)
-
-- F = Ragdoll on/off (Right thumbstick in)
-
-- ESC = Exit program
-
-- R = Restart Level
-
-- Left Alt = Focus/Unfocus emulator (By default, the emulator is active once you run it. If you press alt, you are now free to use the computer and the emulator is ignore. 
-Pressing alt again toggles back to using the emulator)
-
-- Spacebar = DPAD-DOWN (Hold to allow changing camera distance, then use RMB and pull the camera back or in as you would normally with right joystick
 
 
 Any feedback or requests please contact Gunsofthefuture from the Storror discord. I will be keeping track of feedback and in my spare time will keep making this emulator better.
